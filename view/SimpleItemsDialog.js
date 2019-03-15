@@ -3,24 +3,23 @@ import React, { Component } from 'react';
 import { View, Text, Animated, TouchableOpacity, FlatList } from 'react-native';
 
 import BaseDialog from './BaseDialog';
+import PickerView from './PickerView';
 
 class SimpleItemsDialog extends BaseDialog {
   static defaultProps = {
     items: ['a', 'b', 'c'],
-    itemKey: 'key',
-    itemStyle: {
-      fontSize: 14,
-      fontWeight: '400',
-      color: '#333333'
-    },
-    cancel: true,
+    selectedValue: 'a',
+    confirmText: '确定',
+    confirmTextSize: 14,
+    confirmTextColor: '#333333',
     cancelText: '取消',
-    cancelTextStyle: {
-      fontSize: 14,
-      fontWeight: '400',
-      color: '#999999'
-    },
-    onPress: null
+    cancelTextSize: 14,
+    cancelTextColor: '#333333',
+    itemTextColor: 0x333333ff,
+    itemSelectedColor: 0x1097d5ff,
+    itemHeight: 40,
+    onPickerCancel: null,
+    onPickerConfirm: null
   };
 
   constructor(props) {
@@ -31,79 +30,118 @@ class SimpleItemsDialog extends BaseDialog {
     return { justifyContent: 'flex-end', alignItems: 'center' };
   }
 
-  renderItems() {
-    return this.props.items.map((item, index) => {
+  renderPicker() {
+    let selectedIndex = 0;
+    let length = this.props.items.length;
+    for (let i = 0; i < length; i++) {
+      if (this.props.items[i] == this.props.selectedValue) {
+        selectedIndex = i;
+        break;
+      }
+    }
+    if (this.props.items && length > 0) {
       return (
-        <TouchableOpacity
-          onPress={() => {
-            this.dismiss(() => {
-              if (this.props.onPress) {
-                this.props.onPress(index);
-              }
-            });
+        <PickerView
+          itemTextColor={this.props.itemTextColor}
+          itemSelectedColor={this.props.itemSelectedColor}
+          list={this.props.items}
+          onPickerSelected={toValue => {
+            this.props.selectedValue = toValue;
           }}
-          key={index}
-          style={{
-            width: this.mScreenWidth,
-            height: this.getSize(49),
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-        >
-          <Text style={this.props.itemStyle}>
-            {typeof item == 'string' ? item : item[this.props.itemKey]}
-          </Text>
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              width: this.mScreenWidth,
-              height: this.mOnePixel,
-              backgroundColor: '#E8EEF0'
-            }}
-          />
-        </TouchableOpacity>
-      );
-    });
-  }
-
-  renderCancel() {
-    return (
-      <TouchableOpacity
-        onPress={() => this.dismiss()}
-        style={{
-          width: this.mScreenWidth,
-          height: this.getSize(49),
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <Text style={this.props.cancelTextStyle}>{this.props.cancelText}</Text>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            width: this.mScreenWidth,
-            height: this.mOnePixel,
-            backgroundColor: '#E8EEF0'
-          }}
+          selectedIndex={selectedIndex}
+          fontSize={this.getSize(14)}
+          itemWidth={this.mScreenWidth}
+          itemHeight={this.props.itemHeight}
         />
-      </TouchableOpacity>
-    );
+      );
+    } else {
+      return null;
+    }
   }
 
   renderContent() {
     return (
       <View
         style={{
-          width: this.mScreenWidth,
-          backgroundColor: '#ffffff',
-          borderTopLeftRadius: 5,
-          borderTopRightRadius: 5
+          height:
+            this.props.itemHeight * 5 + this.getSize(15) + this.getSize(44),
+          width: this.mScreenWidth
         }}
       >
-        {this.renderItems()}
-        {this.props.cancel ? this.renderCancel() : null}
+        <View
+          style={{
+            width: this.mScreenWidth,
+            height: this.props.itemHeight * 5 + this.getSize(15),
+            flexDirection: 'row',
+            position: 'absolute',
+            bottom: 0
+          }}
+        >
+          {this.renderPicker()}
+        </View>
+        <View
+          style={{
+            width: this.mScreenWidth,
+            height: this.getSize(44),
+            backgroundColor: '#ffffff',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            position: 'absolute',
+            top: 0,
+            borderBottomColor: '#F4F4F4',
+            borderBottomWidth: 1,
+            borderTopLeftRadius: 5,
+            borderTopRightRadius: 5
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              this.dismiss(() => {
+                this.props.onPickerCancel && this.props.onPickerCancel();
+              });
+            }}
+            style={{
+              width: this.getSize(60),
+              height: this.getSize(44),
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Text
+              style={{
+                fontSize: this.props.cancelTextSize,
+                fontWeight: '400',
+                color: this.props.cancelTextColor
+              }}
+            >
+              {this.props.cancelText}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.dismiss(() => {
+                this.props.onPickerConfirm &&
+                  this.props.onPickerConfirm(this.props.selectedValue);
+              });
+            }}
+            style={{
+              width: this.getSize(60),
+              height: this.getSize(44),
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
+            <Text
+              style={{
+                fontSize: this.props.confirmTextSize,
+                fontWeight: '400',
+                color: this.props.confirmTextColor
+              }}
+            >
+              {this.props.confirmText}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
