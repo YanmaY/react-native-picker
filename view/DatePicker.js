@@ -221,7 +221,9 @@ class DatePicker extends BaseDialog {
             position: 'absolute',
             top: 0,
             borderBottomColor: '#F4F4F4',
-            borderBottomWidth: StyleSheet.hairlineWidth
+            borderBottomWidth: 1,
+            borderTopLeftRadius: 5,
+            borderTopRightRadius: 5
           }}
         >
           <TouchableOpacity
