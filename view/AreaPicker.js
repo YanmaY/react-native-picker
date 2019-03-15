@@ -141,8 +141,7 @@ class AreaPicker extends BaseDialog {
         style={{
           height:
             this.props.itemHeight * 5 + this.getSize(15) + this.getSize(44),
-          width: this.mScreenWidth,
-          backgroundColor: '#ffffff'
+          width: this.mScreenWidth
         }}
       >
         <View
