@@ -1,13 +1,15 @@
 # react-native-pickers
-纯JS实现Picker，还是有点难度的，需要涉及到RN的性能优化（联动不能使用setState来更新）、
-自定义手势、自定义点击以及动画等。<br>
-其他Dialog只是因为Picker是基于项目的BaseDialog扩展来的，就一并整理发布。<br>
 
-🤗 🤗 随手给颗星星呗，有bug或者交流，欢迎留言第一时间维护。🤗 🤗<br>
+纯 JS 实现 Picker，还是有点难度的，需要涉及到 RN 的性能优化（联动不能使用 setState 来更新）、
+自定义手势、自定义点击以及动画等。<br>
+其他 Dialog 只是因为 Picker 是基于项目的 BaseDialog 扩展来的，就一并整理发布。<br>
+
+🤗 🤗 随手给颗星星呗，有 bug 或者交流，欢迎留言第一时间维护。🤗 🤗<br>
 
 ![img](https://github.com/iberHK/react-native-pickers/blob/master/screenshot/demo2.gif?raw=true)
 
 ### 安装：
+
 <code>yarn add react-native-pickers</code><br>
 <code>yarn add react-native-svg</code><br>
 <code>react-native link react-native-svg</code><br>
@@ -555,6 +557,13 @@
                 返回输入的文本内容
             </td>
         </tr>
+        <tr>
+            <td>onCancel</td>
+            <td>null</td>
+            <td>
+                点击‘返回’按钮的回调
+            </td>
+        </tr>
         <tr><td colspan="4">InputDialog.show(text)，显示dialog，text：用于编辑时，设置前值</td></tr>
     </tbody>
 </table>
@@ -618,7 +627,6 @@
         <tr><td colspan="4">DownloadDialog.setProcess(0, '4.24MB')，设置当前进度，及下载文件总数</td></tr>
     </tbody>
 </table>
-
 
 <br>
 <li>ToastComponent:</li>

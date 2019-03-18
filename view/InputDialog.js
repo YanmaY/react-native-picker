@@ -26,7 +26,8 @@ class InputDialog extends BaseDialog {
     btnTextColor: '#ffffff',
     btnBgColor: '#1097D5',
     placeholder: '请尽量说明问题，我们将尽快处理...',
-    onSubmit: null
+    onSubmit: null,
+    onCancel: null
   };
 
   constructor(props) {
@@ -65,7 +66,11 @@ class InputDialog extends BaseDialog {
           }}
         >
           <TouchableOpacity
-            onPress={() => this.dismiss()}
+            onPress={() =>
+              this.dismiss(() => {
+                this.props.onCancel && this.props.onCancel();
+              })
+            }
             style={{
               position: 'absolute',
               left: this.getSize(10),
