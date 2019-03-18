@@ -163,7 +163,11 @@ class InputDialog extends BaseDialog {
             </Text>
           </TouchableOpacity>
         </View>
+<<<<<<< HEAD
         {this.props.modal ? null : <KeyboardSpacer />}
+=======
+        {this.props.modal ? <KeyboardSpacer /> : null}
+>>>>>>> eb1a65929bbca0fbe2ea36a5cd540f8fd6e6c9ec
       </View>
     );
   }
