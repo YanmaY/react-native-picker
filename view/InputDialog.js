@@ -27,7 +27,8 @@ class InputDialog extends BaseDialog {
     btnBgColor: '#1097D5',
     placeholder: '请尽量说明问题，我们将尽快处理...',
     onSubmit: null,
-    onCancel: null
+    onCancel: null,
+    modal: true
   };
 
   constructor(props) {
@@ -162,7 +163,7 @@ class InputDialog extends BaseDialog {
             </Text>
           </TouchableOpacity>
         </View>
-        <KeyboardSpacer />
+        {this.props.modal ? null : <KeyboardSpacer />}
       </View>
     );
   }
