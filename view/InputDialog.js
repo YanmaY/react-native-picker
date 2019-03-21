@@ -28,7 +28,8 @@ class InputDialog extends BaseDialog {
     placeholder: '请尽量说明问题，我们将尽快处理...',
     onSubmit: null,
     onCancel: null,
-    modal: true
+    modal: true,
+    numberOfLines: 1
   };
 
   constructor(props) {
@@ -108,7 +109,10 @@ class InputDialog extends BaseDialog {
           style={{
             width: this.getSize(345),
             marginLeft: this.getSize(15),
-            height: this.getSize(100),
+            height:
+              this.props.numberOfLines > 1
+                ? this.getSize(100)
+                : this.getSize(20),
             color: '#333333',
             fontSize: this.getSize(14),
             borderWidth: 1,
@@ -119,8 +123,8 @@ class InputDialog extends BaseDialog {
             paddingRight: this.getSize(15),
             paddingTop: this.getSize(10)
           }}
-          numberOfLines={4}
-          multiline={true}
+          numberOfLines={this.props.numberOfLines}
+          multiline={this.props.numberOfLines > 1}
           value={this.state.text}
           underlineColorAndroid={'transparent'}
           placeholder={this.props.placeholder}
@@ -163,11 +167,7 @@ class InputDialog extends BaseDialog {
             </Text>
           </TouchableOpacity>
         </View>
-<<<<<<< HEAD
         {this.props.modal ? null : <KeyboardSpacer />}
-=======
-        {this.props.modal ? <KeyboardSpacer /> : null}
->>>>>>> eb1a65929bbca0fbe2ea36a5cd540f8fd6e6c9ec
       </View>
     );
   }

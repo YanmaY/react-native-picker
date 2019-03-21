@@ -571,6 +571,13 @@
                 组件是否包含在modal中
             </td>
         </tr>
+        <tr>
+            <td>numberOfLines</td>
+            <td>1</td>
+            <td>
+                input输入框行数
+            </td>
+        </tr>
         <tr><td colspan="4">InputDialog.show(text)，显示dialog，text：用于编辑时，设置前值</td></tr>
     </tbody>
 </table>
