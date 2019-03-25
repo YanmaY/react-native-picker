@@ -47,7 +47,7 @@ class SimpleItemsDialog extends BaseDialog {
       if (isObject) items.push(this.props.items[i].name);
 
       if (
-        selected &&
+        !selected &&
         (this.props.items[i] === this.props.selectedValue ||
           this.props.items[i].id === this.props.selectedValue)
       ) {
