@@ -21,7 +21,7 @@ class DatePicker extends BaseDialog {
       new Date().getMonth() + 1 + '月',
       new Date().getDate() + '日'
     ],
-    startYear: 1990,
+    startYear: 1900,
     endYear: new Date().getFullYear(),
 
     confirmText: '确定',
@@ -189,9 +189,9 @@ class DatePicker extends BaseDialog {
   }
 
   renderContent() {
-    // let data = this.getDateList();
-    // this.state.pickerData = data.pickerData;
-    // this.state.selectedIndex = data.selectedIndex;
+    let data = this.getDateList();
+    this.state.pickerData = data.pickerData;
+    this.state.selectedIndex = data.selectedIndex;
     return (
       <View
         style={{
