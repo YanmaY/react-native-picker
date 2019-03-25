@@ -21,6 +21,7 @@ class SimpleItemsDialog extends BaseDialog {
     onPickerCancel: null,
     onPickerConfirm: null
   };
+  selectedValue = null;
 
   constructor(props) {
     super(props);
@@ -33,20 +34,41 @@ class SimpleItemsDialog extends BaseDialog {
   renderPicker() {
     let selectedIndex = 0;
     let length = this.props.items.length;
+    let items = [];
+    let isObject = false;
+    let selected = false;
+
+    if (typeof this.props.items[0] === 'object') {
+      isObject = true;
+      items.length = 0;
+    } else items = this.props.items;
+
     for (let i = 0; i < length; i++) {
-      if (this.props.items[i] == this.props.selectedValue) {
+      if (isObject) items.push(this.props.items[i].name);
+
+      if (
+        selected &&
+        (this.props.items[i] === this.props.selectedValue ||
+          this.props.items[i].id === this.props.selectedValue)
+      ) {
+        selected = true;
         selectedIndex = i;
-        break;
+        this.selectedValue = items[i];
       }
     }
+
     if (this.props.items && length > 0) {
       return (
         <PickerView
           itemTextColor={this.props.itemTextColor}
           itemSelectedColor={this.props.itemSelectedColor}
-          list={this.props.items}
+          list={items}
           onPickerSelected={toValue => {
-            this.props.selectedValue = toValue;
+            if (isObject)
+              this.selectedValue = this.props.items.find(
+                x => x.name === toValue
+              );
+            else this.selectedValue = toValue;
           }}
           selectedIndex={selectedIndex}
           fontSize={this.getSize(14)}
@@ -121,7 +143,7 @@ class SimpleItemsDialog extends BaseDialog {
             onPress={() => {
               this.dismiss(() => {
                 this.props.onPickerConfirm &&
-                  this.props.onPickerConfirm(this.props.selectedValue);
+                  this.props.onPickerConfirm(this.selectedValue);
               });
             }}
             style={{
