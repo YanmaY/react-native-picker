@@ -45,8 +45,9 @@ class InputDialog extends BaseDialog {
     super.show();
   }
 
-  dismiss() {
+  dismiss(cb) {
     super.close();
+    cb && cb();
   }
 
   renderContent() {
