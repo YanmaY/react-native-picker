@@ -53,7 +53,7 @@ class SimpleItemsDialog extends BaseDialog {
       ) {
         selected = true;
         selectedIndex = i;
-        this.selectedValue = items[i];
+        this.selectedValue = this.props.items[i];
       }
     }
 
