@@ -139,9 +139,7 @@ class InputDialog extends BaseDialog {
             underlineColorAndroid={'transparent'}
             placeholder={this.props.placeholder}
             placeholderTextColor="#999999"
-            onChangeText={text => {
-              this.inputText = text;
-            }}
+            onChangeText={text => (this.inputText = text)}
           />
           <View
             style={{
@@ -156,7 +154,10 @@ class InputDialog extends BaseDialog {
               onPress={() => {
                 Keyboard.dismiss();
                 this.dismiss(() => {
-                  this.props.onSubmit && this.props.onSubmit(this.inputText);
+                  this.props.onSubmit &&
+                    (this.props.placeholder ||
+                      (!this.props.placeholder && this.inputText)) &&
+                    this.props.onSubmit(this.inputText);
                 });
               }}
               style={{

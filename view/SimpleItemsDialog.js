@@ -41,8 +41,11 @@ class SimpleItemsDialog extends BaseDialog {
     if (typeof this.props.items[0] === 'object') {
       isObject = true;
       items.length = 0;
-    } else items = this.props.items;
-
+      this.selectedValue = this.props.items[0];
+    } else {
+      items = this.props.items;
+      this.selectedValue = this.props.items;
+    }
     for (let i = 0; i < length; i++) {
       if (isObject) items.push(this.props.items[i].name);
 
