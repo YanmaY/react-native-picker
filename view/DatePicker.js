@@ -1,14 +1,22 @@
 import React, { Component, UIManager } from 'react';
 
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { Overlay } from 'teaset';
 
 import PickerView from './PickerView';
 
-import BaseDialog from './BaseDialog';
-
 import TimeUtils from '../utils/TimeUtils';
 
-class DatePicker extends BaseDialog {
+class DatePicker extends Component {
+  mScreenWidth = Dimensions.get('window').width;
+  /**
+   * return 當前分辨率下的數值
+   * @param {*} size 375标注图下的值
+   */
+  getSize(size) {
+    return parseInt((this.mScreenWidth * size) / 375);
+  }
+
   static defaultProps = {
     removeSubviews: false,
     itemTextColor: 0x333333ff,
@@ -188,7 +196,7 @@ class DatePicker extends BaseDialog {
     });
   }
 
-  renderContent() {
+  render() {
     let data = this.getDateList();
     this.state.pickerData = data.pickerData;
     this.state.selectedIndex = data.selectedIndex;
@@ -227,13 +235,9 @@ class DatePicker extends BaseDialog {
           }}
         >
           <TouchableOpacity
-            onPress={() => {
-              this.dismiss(
-                () =>
-                  this.props.onPickerCancel &&
-                  this.props.onPickerCancel(this.props.selectedValue)
-              );
-            }}
+            onPress={() =>
+              this.props.onPickerCancel && this.props.onPickerCancel()
+            }
             style={{
               width: this.getSize(60),
               height: this.getSize(44),
@@ -243,9 +247,9 @@ class DatePicker extends BaseDialog {
           >
             <Text
               style={{
-                fontSize: this.props.cancelTextSize,
+                fontSize: this.props.confirmTextSize,
                 fontWeight: '400',
-                color: this.props.cancelTextColor
+                color: this.props.confirmTextColor
               }}
             >
               {this.props.cancelText}
@@ -253,11 +257,8 @@ class DatePicker extends BaseDialog {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              this.dismiss(
-                () =>
-                  this.props.onPickerConfirm &&
-                  this.props.onPickerConfirm(this.props.selectedValue)
-              );
+              this.props.onPickerConfirm &&
+                this.props.onPickerConfirm(this.props.selectedValue);
             }}
             style={{
               width: this.getSize(60),
@@ -282,4 +283,30 @@ class DatePicker extends BaseDialog {
   }
 }
 
-export default DatePicker;
+class Pickers extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  show() {
+    let overlayView = (
+      <Overlay.PullView
+        side="bottom"
+        modal={false}
+        ref={v => (this.overlayPopView = v)}
+      >
+        <DatePicker {...this.props} />
+      </Overlay.PullView>
+    );
+    Overlay.show(overlayView);
+  }
+
+  close() {
+    this.overlayPopView && this.overlayPopView.close();
+  }
+
+  render() {
+    return null;
+  }
+}
+export default Pickers;
