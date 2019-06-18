@@ -131,7 +131,8 @@ class InputDialog extends BaseDialog {
               borderRadius: this.getSize(4),
               paddingLeft: this.getSize(15),
               paddingRight: this.getSize(15),
-              paddingTop: this.getSize(10)
+              paddingTop: this.getSize(10),
+              textAlignVertical: 'top'
             }}
             numberOfLines={this.props.numberOfLines}
             multiline={this.props.numberOfLines > 1}
