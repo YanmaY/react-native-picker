@@ -11,12 +11,7 @@ export default class BaseDialog extends BaseComponent {
 
   show() {
     let overlayView = (
-      <Overlay.PullView
-        side="bottom"
-        modal={false}
-        autoKeyboardInsets={true}
-        ref={v => (this.overlayPopView = v)}
-      >
+      <Overlay.PullView side="bottom" modal={false} ref={(v) => (this.overlayPopView = v)}>
         {this.renderContent()}
       </Overlay.PullView>
     );
